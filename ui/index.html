@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Photos — Infinite YouTube Vault</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-root">
+    
+    <!-- Top Navigation (Swiss Header) -->
+    <header class="swiss-header">
+      <div class="brand-cluster">
+        <div class="swiss-cross" title="Swiss International Typographic Design">
+          <span class="cross-v"></span>
+          <span class="cross-h"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-main">AETHER</span>
+          <span class="brand-sub">// PHOTOS VAULT</span>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search photos, dates, or YouTube batch IDs..." autocomplete="off">
+      </div>
+
+      <!-- Top Actions -->
+      <div class="header-actions">
+        <div class="vault-indicator">
+          <span class="pulse-dot"></span>
+          <span class="vault-label">YOUTUBE STORAGE: <strong class="accent-text">∞ UNLIMITED</strong></span>
+        </div>
+        <button class="btn-primary" id="btnUploadModal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Upload Photos
+        </button>
+      </div>
+    </header>
+
+    <!-- Layout Shell -->
+    <div class="layout-shell">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <button class="nav-item active" data-tab="all-photos">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>All Photos</span>
+            <span class="counter-badge" id="badgeAllCount">0</span>
+          </button>
+
+          <button class="nav-item" data-tab="batches">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"></polygon>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+            <span>YouTube Batches</span>
+            <span class="counter-badge" id="badgeBatchCount">0</span>
+          </button>
+
+          <button class="nav-item" data-tab="encoder-test">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span>Binary Stream Lab</span>
+          </button>
+        </nav>
+
+        <div class="storage-card">
+          <div class="storage-title">CLOUD PARASITE ENGINE</div>
+          <div class="storage-desc">Photos are compressed into 1080p binary video chunks and stored permanently on YouTube with zero subscription fees.</div>
+          <div class="storage-metric">
+            <span>SAVED DRIVE SPACE</span>
+            <strong id="savedSpaceLabel">0.00 MB</strong>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Stage -->
+      <main class="content-stage">
+        
+        <!-- TAB 1: ALL PHOTOS GALLERY -->
+        <section class="tab-panel active" id="tab-all-photos">
+          <div class="panel-header">
+            <div>
+              <h1 class="panel-title">Gallery</h1>
+              <p class="panel-subtitle">Original bit-perfect photos stored in YouTube binary video containers.</p>
+            </div>
+            <div class="panel-tools">
+              <button class="btn-secondary" id="btnSelectBatch">Select Batch (15)</button>
+              <button class="btn-primary" id="btnEncodeSelected" disabled>Encode to Video (0)</button>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div class="empty-gallery" id="emptyGallery">
+            <div class="empty-graphic">
+              <span class="empty-plus">+</span>
+            </div>
+            <h2>No photos in vault yet</h2>
+            <p>Drag & drop photos anywhere or click "Upload Photos" to start building your unlimited YouTube vault.</p>
+            <button class="btn-primary" id="btnUploadEmpty">Select Photos to Upload</button>
+          </div>
+
+          <!-- Gallery Grid -->
+          <div class="masonry-grid" id="galleryGrid">
+            <!-- Dynamic Photo Cards -->
+          </div>
+        </section>
+
+        <!-- TAB 2: YOUTUBE BATCHES -->
+        <section class="tab-panel" id="tab-batches">
+          <div class="panel-header">
+            <div>
+              <h1 class="panel-title">YouTube Batches</h1>
+              <p class="panel-subtitle">15-Photo binary video archives hosted on YouTube.</p>
+            </div>
+          </div>
+
+          <div class="batches-grid" id="batchesGrid">
+            <!-- Dynamic Batch Cards -->
+          </div>
+
+          <!-- Direct YouTube Extraction Box -->
+          <div style="margin-top: 32px; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">Direct YouTube Cloud Restore</h3>
+            <p style="font-size: 13px; color: #8e8e93; margin-bottom: 16px;">Paste any unlisted Aether binary video URL (e.g., https://youtu.be/sNdYzGqI3mI) to download the stream and extract your original photos bit-for-bit.</p>
+            <div style="display: flex; gap: 12px;">
+              <input type="text" id="directYtInput" placeholder="https://youtu.be/..." style="flex: 1; padding: 10px 14px; border: 1px solid #eaeaea; border-radius: 8px; font-family: monospace; font-size: 13px;">
+              <button class="btn-primary" id="btnDirectYtRestore" style="white-space: nowrap;">Fetch & Restore Photos</button>
+            </div>
+            <div id="directYtStatus" style="margin-top: 12px; font-size: 13px; font-weight: 500; display: none;"></div>
+          </div>
+        </section>
+
+        <!-- TAB 3: BINARY STREAM LAB -->
+        <section class="tab-panel" id="tab-encoder-test">
+          <div class="panel-header">
+            <div>
+              <h1 class="panel-title">Binary Stream Lab</h1>
+              <p class="panel-subtitle">Inspect the raw 8x8 macro-block video stream that baffles YouTube compression.</p>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-grid">
+              <div class="lab-col">
+                <h3>Live Video Preview</h3>
+                <div class="video-wrapper">
+                  <video id="labVideo" controls loop playsinline></video>
+                </div>
+              </div>
+              <div class="lab-col">
+                <h3>Stream Telemetry</h3>
+                <div class="telemetry-box" id="telemetryBox">
+                  <div class="telemetry-row"><span>RESOLUTION:</span><strong>1920 × 1080 (1080p)</strong></div>
+                  <div class="telemetry-row"><span>BLOCK SIZE:</span><strong>8 × 8 Pixels</strong></div>
+                  <div class="telemetry-row"><span>MARGIN GUARD:</span><strong>16px (2-Block Safe Margin)</strong></div>
+                  <div class="telemetry-row"><span>GRID CAPACITY:</span><strong>30,916 Bits / Frame</strong></div>
+                  <div class="telemetry-row"><span>THROUGHPUT:</span><strong>~116 KB/s @ 30 FPS</strong></div>
+                  <div class="telemetry-row"><span>INTEGRITY:</span><strong class="green-text">SHA-256 Bit-Perfect</strong></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Floating Batch Action Bar -->
+    <div class="floating-action-bar hidden" id="floatingBar">
+      <div class="bar-info">
+        <span class="selection-count" id="selectionCount">0 selected</span>
+        <span class="selection-detail" id="selectionDetail">(Select up to 15 photos per batch)</span>
+      </div>
+      <div class="bar-actions">
+        <button class="btn-secondary" id="btnCancelSelection">Deselect All</button>
+        <button class="btn-accent" id="btnBuildBatch">Create YouTube Batch</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Upload Modal -->
+  <div class="modal-backdrop hidden" id="uploadModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Upload Photos to Vault</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="dropzone" id="dropzone">
+          <div class="drop-icon">↑</div>
+          <h4>Drop high-resolution photos here</h4>
+          <p>PNG, JPG, WebP, TIFF supported. Zero compression on local thumbnails.</p>
+          <input type="file" id="fileInput" multiple accept="image/*" class="file-hidden">
+          <button class="btn-secondary" id="btnBrowseFiles">Browse Computer</button>
+        </div>
+        <div class="upload-preview-list" id="uploadPreviewList"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary full-width" id="btnConfirmUpload" disabled>Import to Vault (0 Photos)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden canvas for client-side zero-space thumbnail generator -->
+  <canvas id="thumbCanvas" style="display:none"></canvas>
+
+  <script src="app.js"></script>
+</body>
+</html>

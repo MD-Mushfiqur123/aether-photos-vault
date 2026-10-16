@@ -1,0 +1,34 @@
+# Video files & binary streams
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.webm
+*.zip
+*.tar.gz
+
+# Local vault storage and extracted photos
+data/vaults/*
+!data/vaults/.gitkeep
+data/extracted/*
+!data/extracted/.gitkeep
+
+# Playwright & browser sessions
+uploader/browser_session/
+*.session
+
+# Test scratchpads & output
+core/qa_scratch/
+core/test_lossy_rec/
+core/test_recovered/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
